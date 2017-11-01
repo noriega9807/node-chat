@@ -20,14 +20,14 @@ io.on('connection', (socket) => {
         console.log('User disconnected from server');
     });
 
-    socket.emit('newMessage', {
-        from: 'ejemplo@ejemplo.com',
-        text: 'hola como estas',
-        createdAt: 123
-    });
-
     socket.on('createMessage', (message) => {
         console.log('createMessage', message);
+        io.emit('newMessage', {
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        });
+
     });
 });
 

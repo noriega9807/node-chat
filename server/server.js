@@ -8,7 +8,8 @@ const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
 
 const {
-    generateMessage
+    generateMessage,
+    generateLocationMessage
 } = require('./utils/message');
 
 var app = express();
@@ -35,6 +36,10 @@ io.on('connection', (socket) => {
 
         callback('This is from the server');
 
+    });
+
+    socket.on('createLocationMessage', (coords) => {
+        io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude));
     });
 });
 
